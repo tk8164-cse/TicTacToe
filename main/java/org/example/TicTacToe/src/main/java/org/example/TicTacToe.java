@@ -2,28 +2,41 @@ package org.example;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Random;
 public class TicTacToe {
-    static char[][] board = new char[3][3];
+    static boolean isHumanTurn;
+    static char humanSymbol;
+    static char computerSymbol;
     public static void main(String[] args) {
-        initializeBoard();
-        printBoard();
+        tossAndAssignSymbols();
+        displayTossResult();
     }
-    static void initializeBoard() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                board[row][col] = '-';
-            }
+    static void tossAndAssignSymbols() {
+        Random random = new Random();
+        int toss = random.nextInt(2);
+        if (toss == 0) {
+            isHumanTurn = true;
+            humanSymbol = 'X';
+            computerSymbol = 'O';
+        }
+        else {
+            isHumanTurn = false;
+            humanSymbol = 'O';
+            computerSymbol = 'X';
         }
     }
-    static void printBoard() {
-        System.out.println("-------------");
-        for (int row = 0; row < 3; row++) {
-            System.out.print("| ");
-            for (int col = 0; col < 3; col++) {
-                System.out.print(board[row][col] + " | ");
-            }
-            System.out.println();
-            System.out.println("-------------");
+    static void displayTossResult() {
+        System.out.println("--- Toss Results ---");
+        if (isHumanTurn) {
+            System.out.println("Toss won by: Human");
+            System.out.println("Human plays first with symbol: " + humanSymbol);
+            System.out.println("Computer plays second with symbol: " + computerSymbol);
         }
+        else {
+            System.out.println("Toss won by: Computer");
+            System.out.println("Computer plays first with symbol: " + computerSymbol);
+            System.out.println("Human plays second with symbol: " + humanSymbol);
+        }
+        System.out.println("--------------------");
     }
 }
