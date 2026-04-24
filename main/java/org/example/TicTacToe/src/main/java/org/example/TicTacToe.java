@@ -3,44 +3,33 @@ package org.example;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class TicTacToe {
-    static char[][] board = {
-            {'-', '-', '-'},
-            {'-', '-', '-'},
-            {'-', '-', '-'}
-    };
+    static char[][] board = new char[3][3];
     public static void main(String[] args) {
-        System.out.println("--- Initial Board ---");
-        displayBoard();
-        int testRow = 1;
-        int testCol = 1;
-        if (isValidMove(testRow, testCol)) {
-            System.out.println("\nPlacing 'X' at (" + testRow + "," + testCol + ")...");
-            board[testRow][testCol] = 'X'; // Simulate making a move
-        }
-        System.out.println("\n--- Updated Board ---");
-        displayBoard();
+        initializeBoard();
+        placeMove(0, 0, 'X');
+        placeMove(1, 1, 'O');
+        placeMove(2, 2, 'X');
+        printBoard();
     }
-    static void displayBoard() {
+    static void placeMove(int row, int col, char symbol) {
+        board[row][col] = symbol;
+    }
+    static void initializeBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " ");
+                board[i][j] = ' ';
             }
-            System.out.println(); // Move to the next line after each row
         }
     }
-    static boolean isValidMove(int row, int col) {
-        if (row >= 0 && row < 3 && col >= 0 && col < 3) {
-            if (board[row][col] == '-') {
-                return true;
+    static void printBoard() {
+        System.out.println("-------------");
+        for (int i = 0; i < 3; i++) {
+            System.out.print("| ");
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " | ");
             }
-            else {
-                System.out.println("Move failed: Cell is already occupied.");
-                return false;
-            }
-        }
-        else {
-            System.out.println("Move failed: Position is out of board boundaries.");
-            return false;
+            System.out.println();
+            System.out.println("-------------");
         }
     }
 }
