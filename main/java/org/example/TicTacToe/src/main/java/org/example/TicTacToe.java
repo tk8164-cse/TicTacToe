@@ -5,29 +5,50 @@ package org.example;
 public class TicTacToe {
     static char[][] board = new char[3][3];
     public static void main(String[] args) {
-        board[0][0] = 'X';
-        board[0][1] = 'X';
-        board[0][2] = 'X';
+        initializeBoard();
+        board[0][0] = 'X'; board[0][1] = 'O'; board[0][2] = 'X';
+        board[1][0] = 'O'; board[1][1] = 'X'; board[1][2] = 'O';
+        board[2][0] = 'X'; board[2][1] = 'X'; board[2][2] = 'O';
+        showBoard();
         System.out.println("Has 'X' won? " + hasWon('X'));
+        System.out.println("Is the game a draw? " + isDraw());
+    }
+    static void initializeBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = '-';
+            }
+        }
+    }
+    static void showBoard() {
+        System.out.println("Current Board:");
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                System.out.print(board[r][c]);
+                if (c < 2) System.out.print(" | ");
+            }
+            System.out.println();
+            if (r < 2) System.out.println("---------");
+        }
+        System.out.println();
     }
     static boolean hasWon(char symbol) {
-        // 1. Check Rows
         for (int i = 0; i < 3; i++) {
-            if (board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol) {
+            if ((board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol) ||
+                    (board[0][i] == symbol && board[1][i] == symbol && board[2][i] == symbol)) {
                 return true;
             }
         }
-        for (int j = 0; j < 3; j++) {
-            if (board[0][j] == symbol && board[1][j] == symbol && board[2][j] == symbol) {
-                return true;
+        return (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) ||
+                (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol);
+    }
+    static boolean isDraw() {
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                if (board[r][c] == '-')
+                    return false;
             }
         }
-        if (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) {
-            return true;
-        }
-        if (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol) {
-            return true;
-        }
-        return false;
+        return true;
     }
 }
