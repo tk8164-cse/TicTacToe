@@ -8,10 +8,13 @@ public class TicTacToe {
         initializeBoard();
         board[0][0] = 'X'; board[0][1] = 'O'; board[0][2] = 'X';
         board[1][0] = 'O'; board[1][1] = 'X'; board[1][2] = 'O';
-        board[2][0] = 'X'; board[2][1] = 'X'; board[2][2] = 'O';
+        board[2][0] = 'X'; board[2][1] = 'O'; board[2][2] = 'X';
         showBoard();
-        System.out.println("Has 'X' won? " + hasWon('X'));
-        System.out.println("Is the game a draw? " + isDraw());
+        boolean xWon = hasWon('X');
+        boolean oWon = hasWon('O');
+        System.out.println("Has 'X' won? " + xWon);
+        System.out.println("Has 'O' won? " + oWon);
+        System.out.println("Is the game a draw? " + (isBoardFull() && !xWon && !oWon));
     }
     static void initializeBoard() {
         for (int i = 0; i < 3; i++) {
@@ -24,11 +27,11 @@ public class TicTacToe {
         System.out.println("Current Board:");
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
-                System.out.print(board[r][c]);
-                if (c < 2) System.out.print(" | ");
+                System.out.print(" " + board[r][c] + " ");
+                if (c < 2) System.out.print("|");
             }
             System.out.println();
-            if (r < 2) System.out.println("---------");
+            if (r < 2) System.out.println("-----------");
         }
         System.out.println();
     }
@@ -42,11 +45,10 @@ public class TicTacToe {
         return (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol) ||
                 (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol);
     }
-    static boolean isDraw() {
+    static boolean isBoardFull() {
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
-                if (board[r][c] == '-')
-                    return false;
+                if (board[r][c] == '-') return false;
             }
         }
         return true;
